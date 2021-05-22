@@ -3,6 +3,10 @@ package com.icuxika.scaffold.registrar;
 import com.icuxika.scaffold.annotation.SimpleFeignClient;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.config.BeanDefinitionHolder;
+import org.springframework.beans.factory.support.AbstractBeanDefinition;
+import org.springframework.beans.factory.support.BeanDefinitionBuilder;
+import org.springframework.beans.factory.support.BeanDefinitionReaderUtils;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
@@ -10,7 +14,6 @@ import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.util.ClassUtils;
 
-import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Set;
 
@@ -39,15 +42,19 @@ public class SimpleFeignClientsRegistrar implements ImportBeanDefinitionRegistra
 
                 Map<String, Object> attributes = annotationMetadata.getAnnotationAttributes(SimpleFeignClient.class.getCanonicalName());
                 if (attributes != null) {
-                    String name = (String) attributes.get("name");
                     String className = annotationMetadata.getClassName();
-                    Class clazz = ClassUtils.resolveClassName(className, null);
-                    System.out.println(clazz);
-                    Method[] declaredMethods = clazz.getDeclaredMethods();
-                    for (int i = 0; i < declaredMethods.length; i++) {
-                        Method method = declaredMethods[i];
-                        System.out.println(method);
-                    }
+                    Class<?> clazz = ClassUtils.resolveClassName(className, null);
+                    String name = (String) attributes.get("name");
+                    String baseUrl = (String) attributes.get("baseUrl");
+
+                    BeanDefinitionBuilder definitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(SimpleFeignClientFactoryBean.class);
+                    definitionBuilder.addConstructorArgValue(clazz);
+                    definitionBuilder.addConstructorArgValue(baseUrl);
+
+                    AbstractBeanDefinition handleDefinition = definitionBuilder.getBeanDefinition();
+
+                    BeanDefinitionHolder holder = new BeanDefinitionHolder(handleDefinition, name, new String[]{name});
+                    BeanDefinitionReaderUtils.registerBeanDefinition(holder, registry);
                 }
             }
         });
