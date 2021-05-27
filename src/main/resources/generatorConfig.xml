@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<!-- 配置生成器  -->
+<generatorConfiguration>
+    <!-- 导入属性配置 -->
+    <properties resource="generatorConfig.properties"/>
+    <classPathEntry
+            location="C:\Users\icuxika\.gradle\caches\modules-2\files-2.1\mysql\mysql-connector-java\8.0.23\14d64ac509adccaff444513c12646d93e4ed8be8\mysql-connector-java-8.0.23.jar"/>
+
+    <context id="mysql" targetRuntime="MyBatis3DynamicSql">
+        <!-- 下面各项必须按照顺序！！！！！！！！！！！！！！！！！！！！！！！！！！！ -->
+        <!-- 注释 -->
+        <commentGenerator>
+            <!-- 是否取消注释 -->
+            <property name="suppressAllComments" value="false"/>
+            <!-- 是否生成注释时间戳 -->
+            <property name="suppressDate" value="false"/>
+            <!-- 是否在注释中包含列的注释 Kotlin中似乎无效 -->
+            <property name="addRemarkComments" value="true"/>
+            <property name="dateFormat" value="yyyy-MM-dd HH:mm:ss"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="${driverClass}" connectionURL="${connectionURL}" userId="${userId}"
+                        password="${password}">
+
+            <!-- MySQL8 需加入如下注释 -->
+            <property name="nullCatalogMeansCurrent" value="true"/>
+        </jdbcConnection>
+        <!-- 类型转换 -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="${modelPackage}" targetProject="${modelProject}"/>
+
+        <javaClientGenerator targetPackage="${mapperPackage}" targetProject="${mapperProject}"/>
+
+        <!-- 数据表 -->
+        <table schema="" tableName="${table1}" domainObjectName="${objectName1}"/>
+
+        <table schema="" tableName="${table2}" domainObjectName="${objectName2}"/>
+
+        <table schema="" tableName="${table3}" domainObjectName="${objectName3}"/>
+
+        <table schema="" tableName="${table4}" domainObjectName="${objectName4}"/>
+    </context>
+</generatorConfiguration>

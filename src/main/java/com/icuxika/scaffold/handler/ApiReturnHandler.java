@@ -1,5 +1,6 @@
 package com.icuxika.scaffold.handler;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.icuxika.scaffold.annotation.ApiReturn;
 import com.icuxika.scaffold.config.ApiData;
 import org.springframework.core.MethodParameter;
@@ -14,6 +15,8 @@ import java.io.IOException;
 import java.util.List;
 
 public class ApiReturnHandler extends RequestResponseBodyMethodProcessor {
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public ApiReturnHandler(List<HttpMessageConverter<?>> converters) {
         super(converters);
@@ -33,12 +36,15 @@ public class ApiReturnHandler extends RequestResponseBodyMethodProcessor {
                 return;
             }
         }
-        System.out.println("进入自定义返回值处理器");
-        ApiData<String> apiData = new ApiData<>();
-        apiData.setCode(200);
-        apiData.setData("数据");
-        apiData.setMsg("信息");
-        super.handleReturnValue(apiData, returnType, mavContainer, webRequest);
+
+        if (returnValue instanceof ApiData) {
+            super.handleReturnValue(returnValue, returnType, mavContainer, webRequest);
+        } else {
+            ApiData<Object> result = new ApiData<>();
+            result.setCode(200);
+            result.setData(returnValue);
+            super.handleReturnValue(result, returnType, mavContainer, webRequest);
+        }
     }
 
 }

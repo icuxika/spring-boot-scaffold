@@ -10,7 +10,7 @@
 
 <script>
     window.onload = function () {
-        window.opener.postMessage("[[${token}]]", "http://127.0.0.1:5500/index.html")
+        window.opener.postMessage("[[${token}]]", "[[${notificationPageUrl}]]")
         window.close()
     }
 </script>

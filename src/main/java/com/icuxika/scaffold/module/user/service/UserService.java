@@ -1,12 +1,12 @@
 package com.icuxika.scaffold.module.user.service;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import com.icuxika.scaffold.module.user.entity.User;
 
-@Service
-public class UserService {
+public interface UserService {
 
-    @Transactional
-    public void test() {
-    }
+    void test();
+
+    String some();
+
+    User getUserInfoById(Long userId);
 }
