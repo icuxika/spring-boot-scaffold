@@ -1,5 +1,7 @@
 package com.icuxika.scaffold.util;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.regex.Pattern;
 
 public class StringUtil {
@@ -25,7 +27,8 @@ public class StringUtil {
     /**
      * 校验日期是否符合正确，不全面
      */
-    private static boolean verifyDate(String dateStr) {
+    @Deprecated
+    private static boolean verifyDateOld(String dateStr) {
         int year = Integer.parseInt(dateStr.substring(0, 4));
         int month = Integer.parseInt(dateStr.substring(4, 6));
         int day = Integer.parseInt(dateStr.substring(6, 8));
@@ -47,6 +50,15 @@ public class StringUtil {
             }
         }
         return false;
+    }
+
+    private static boolean verifyDate(String dateStr) {
+        try {
+            LocalDate.parse(dateStr, DateTimeFormatter.BASIC_ISO_DATE);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     /**
