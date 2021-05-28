@@ -23,7 +23,7 @@ public class TokenAuthenticationFilter extends UsernamePasswordAuthenticationFil
     /**
      * 需要token验证的请求需携带此请求头来验证token数据
      */
-    private static final String HEADER_X_AUTH_TOKEN = "X-Auth-Token";
+    public static final String HEADER_X_AUTH_TOKEN = "X-Auth-Token";
 
     /**
      * 登录成功时构造数据以此key交由Spring Session存储于Redis之中

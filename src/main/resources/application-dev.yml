@@ -1,5 +1,5 @@
 oauth2:
-  notification-page-url: http://127.0.0.1:5500/index.html
+  notification-page-url: http://localhost:8080/
   github:
     client-id: 4efe670ba6206abdf3ad
     client-secret: a4dd39dfa16526b536bbde457d7139a2cfbfdab7
