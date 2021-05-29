@@ -37,6 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
+        // Spring Security的Cors配置对于此处放过的路径无效
         web.ignoring().antMatchers(framework.getSecureRequestPaths().toArray(new String[0]));
     }
 

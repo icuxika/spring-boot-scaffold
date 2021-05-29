@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/auth/common")
-public class LoginController {
+public class AuthController {
 
     @Autowired
     private AuthService authService;
