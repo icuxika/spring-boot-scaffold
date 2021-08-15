@@ -13,7 +13,14 @@ public class Framework {
     @Value("#{'${secureRequestPaths}'.split(',')}")
     private List<String> secureRequestPaths;
 
+    @Value("#{'${corsAllowedOrigins}'.split(',')}")
+    private List<String> corsAllowedOrigins;
+
     public List<String> getSecureRequestPaths() {
         return secureRequestPaths;
+    }
+
+    public List<String> getCorsAllowedOrigins() {
+        return corsAllowedOrigins;
     }
 }

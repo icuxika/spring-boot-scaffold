@@ -6,14 +6,14 @@
     <!-- 导入属性配置 -->
     <properties resource="generatorConfig.properties"/>
     <classPathEntry
-            location="C:\Users\icuxika\.gradle\caches\modules-2\files-2.1\mysql\mysql-connector-java\8.0.23\14d64ac509adccaff444513c12646d93e4ed8be8\mysql-connector-java-8.0.23.jar"/>
+            location="/Users/icuxika/.gradle/caches/modules-2/files-2.1/mysql/mysql-connector-java/8.0.25/f8b9123acd13058c941aff25f308c9ed8000bb73/mysql-connector-java-8.0.25.jar"/>
 
     <context id="mysql" targetRuntime="MyBatis3DynamicSql">
         <!-- 下面各项必须按照顺序！！！！！！！！！！！！！！！！！！！！！！！！！！！ -->
         <!-- 注释 -->
-        <commentGenerator>
+        <commentGenerator type="com.icuxika.scaffold.config.MyCommentGenerator">
             <!-- 是否取消注释 -->
-            <property name="suppressAllComments" value="false"/>
+            <property name="suppressAllComments" value="true"/>
             <!-- 是否生成注释时间戳 -->
             <property name="suppressDate" value="false"/>
             <!-- 是否在注释中包含列的注释 Kotlin中似乎无效 -->

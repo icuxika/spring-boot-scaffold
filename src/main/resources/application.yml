@@ -25,9 +25,9 @@ spring:
   #    url: jdbc:h2:./h2/db_test
 
   redis:
-    host: localhost
-    port: 6379
-    password: ALLURE_love921
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:ALLURE_love921}
 
   session:
     store-type: redis
@@ -40,6 +40,31 @@ spring:
       enabled: true
       max-file-size: 512MB # 单个文件的最大上限
       max-request-size: 512MB # 单个请求的文件总大小上限
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    publisher-confirm-type: correlated # 配置消息到达交换器的确认回调
+    publisher-returns: true # 配置消息到达队列的回调
+    listener:
+      simple:
+        acknowledge-mode: manual
+        retry:
+          enabled: true
+      direct:
+        acknowledge-mode: manual # 设置消费端手动 ack
+        retry:
+          enabled: true # 是否支持重试
+    template:
+      retry:
+        enabled: true # 开启重试机制
+        initial-interval: 1000ms # 重试起始间隔时间
+        max-attempts: 10 # 最大重试次数
+        max-interval: 10000ms # 最大重试间隔时间
+        multiplier: 2 # 间隔时间乘数。（这里配置间隔时间乘数为 2，则第一次间隔时间 1 秒，第二次重试间隔时间 2 秒，第三次 4 秒，以此类推）
+      mandatory: true
 
 mybatis:
   configuration:

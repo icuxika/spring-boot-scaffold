@@ -1,5 +1,6 @@
 package com.icuxika.scaffold.module.auth.controller;
 
+import com.icuxika.scaffold.config.ApiData;
 import com.icuxika.scaffold.module.auth.entity.Login;
 import com.icuxika.scaffold.module.auth.entity.UserToken;
 import com.icuxika.scaffold.module.auth.service.AuthService;
@@ -20,16 +21,16 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("login")
-    public String login(@RequestBody Login login, HttpSession session) {
+    public ApiData<Void> login(@RequestBody Login login, HttpSession session) {
         UserToken userToken = authService.login(login.getUsername(), login.getPassword());
         session.setAttribute(TokenAuthenticationFilter.SESSION_ATTRIBUTE_USER_TOKEN, userToken);
-        return "登录成功";
+        return ApiData.ok("登录成功");
     }
 
     @PostMapping("register")
-    public String register(@RequestBody Login login, HttpSession session) {
+    public ApiData<Void> register(@RequestBody Login login, HttpSession session) {
         UserToken userToken = authService.register(login.getUsername(), login.getPassword());
         session.setAttribute(TokenAuthenticationFilter.SESSION_ATTRIBUTE_USER_TOKEN, userToken);
-        return "注册成功";
+        return ApiData.ok("注册成功");
     }
 }

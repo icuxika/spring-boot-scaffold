@@ -1,6 +1,7 @@
 package com.icuxika.scaffold.security;
 
 import com.icuxika.scaffold.module.auth.entity.UserToken;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -48,7 +49,7 @@ public class TokenAuthenticationFilter extends UsernamePasswordAuthenticationFil
 
         if (token == null || userToken == null) {
             httpServletResponse.setContentType(MediaType.APPLICATION_JSON_VALUE);
-            httpServletResponse.setStatus(401);
+            httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
             httpServletResponse.getWriter().write("No token");
             httpServletResponse.flushBuffer();
             return;
@@ -56,7 +57,7 @@ public class TokenAuthenticationFilter extends UsernamePasswordAuthenticationFil
             // 登录凭证过期
             if (userToken.getExpireIn().isBefore(LocalDateTime.now())) {
                 httpServletResponse.setContentType(MediaType.APPLICATION_JSON_VALUE);
-                httpServletResponse.setStatus(401);
+                httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
                 httpServletResponse.getWriter().write("Login credentials expired");
                 httpServletResponse.flushBuffer();
                 return;

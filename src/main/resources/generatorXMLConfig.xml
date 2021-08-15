@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<!-- 配置生成器  -->
+<generatorConfiguration>
+    <!-- 导入属性配置 -->
+    <properties resource="generatorConfig.properties"/>
+    <classPathEntry
+            location="/Users/icuxika/.gradle/caches/modules-2/files-2.1/mysql/mysql-connector-java/8.0.25/f8b9123acd13058c941aff25f308c9ed8000bb73/mysql-connector-java-8.0.25.jar"/>
+
+    <context id="mysql" targetRuntime="MyBatis3Simple">
+        <!-- 下面各项必须按照顺序！！！！！！！！！！！！！！！！！！！！！！！！！！！ -->
+        <!-- 注释 -->
+        <commentGenerator>
+            <!-- 是否取消注释 -->
+            <property name="suppressAllComments" value="true"/>
+            <!-- 是否生成注释时间戳 -->
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="${driverClass}" connectionURL="${connectionURL}" userId="${userId}"
+                        password="${password}">
+            <!-- MySQL8 需加入如下注释 -->
+            <property name="nullCatalogMeansCurrent" value="true"/>
+        </jdbcConnection>
+        <!-- 类型转换 -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="${modelPackage}" targetProject="${modelProject}"/>
+
+        <sqlMapGenerator targetPackage="${sqlMapPackage}" targetProject="${sqlMapProject}"/>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="${mapperPackage}" targetProject="${mapperProject}"/>
+
+        <!-- 数据表 -->
+        <table schema="" tableName="${table1}" domainObjectName="${objectName1}"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false" enableInsert="true"/>
+
+        <table schema="" tableName="${table2}" domainObjectName="${objectName2}"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false" enableInsert="true"/>
+
+        <table schema="" tableName="${table3}" domainObjectName="${objectName3}"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false" enableInsert="true"/>
+
+        <table schema="" tableName="${table4}" domainObjectName="${objectName4}"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false" enableInsert="true"/>
+    </context>
+</generatorConfiguration>
