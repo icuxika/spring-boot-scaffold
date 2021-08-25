@@ -36,6 +36,14 @@ public class ApiData<T> {
         return new ApiData<>(HttpStatus.OK.value(), data, msg);
     }
 
+    public static ApiData<Void> error(String msg) {
+        return new ApiData<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), null, msg);
+    }
+
+    public static <T> ApiData<T> error(T data, String msg) {
+        return new ApiData<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), data, msg);
+    }
+
     public ApiData(Integer code, T data, String msg) {
         this.code = code;
         this.data = data;

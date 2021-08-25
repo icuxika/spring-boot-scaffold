@@ -13,7 +13,12 @@ public enum LoginType {
     /**
      * 码云登录
      */
-    GITEE(2);
+    GITEE(2),
+
+    /**
+     * WeChat登录
+     */
+    WECHAT(3);
 
     private int index;
 

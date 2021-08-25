@@ -3,7 +3,7 @@ package com.icuxika.scaffold.module.user.entity;
 public class ThirdAuth {
     private Long id;
 
-    private Long openId;
+    private String openId;
 
     private Integer type;
 
@@ -15,11 +15,11 @@ public class ThirdAuth {
         this.id = id;
     }
 
-    public Long getOpenId() {
+    public String getOpenId() {
         return openId;
     }
 
-    public void setOpenId(Long openId) {
+    public void setOpenId(String openId) {
         this.openId = openId;
     }
 

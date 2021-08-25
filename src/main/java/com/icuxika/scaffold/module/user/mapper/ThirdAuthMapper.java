@@ -1,13 +1,6 @@
 package com.icuxika.scaffold.module.user.mapper;
 
-import static com.icuxika.scaffold.module.user.mapper.ThirdAuthDynamicSqlSupport.*;
-import static org.mybatis.dynamic.sql.SqlBuilder.*;
-
 import com.icuxika.scaffold.module.user.entity.ThirdAuth;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 import org.mybatis.dynamic.sql.BasicColumn;
@@ -25,14 +18,21 @@ import org.mybatis.dynamic.sql.update.render.UpdateStatementProvider;
 import org.mybatis.dynamic.sql.util.SqlProviderAdapter;
 import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+
+import static com.icuxika.scaffold.module.user.mapper.ThirdAuthDynamicSqlSupport.*;
+import static org.mybatis.dynamic.sql.SqlBuilder.isEqualTo;
+
 @Mapper
 public interface ThirdAuthMapper {
     BasicColumn[] selectList = BasicColumn.columnList(id, openId, type);
 
-    @SelectProvider(type=SqlProviderAdapter.class, method="select")
+    @SelectProvider(type = SqlProviderAdapter.class, method = "select")
     long count(SelectStatementProvider selectStatement);
 
-    @DeleteProvider(type=SqlProviderAdapter.class, method="delete")
+    @DeleteProvider(type = SqlProviderAdapter.class, method = "delete")
     int delete(DeleteStatementProvider deleteStatement);
 
     @InsertProvider(type=SqlProviderAdapter.class, method="insert")
@@ -48,9 +48,9 @@ public interface ThirdAuthMapper {
 
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
     @Results(id="ThirdAuthResult", value = {
-        @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
-        @Result(column="open_id", property="openId", jdbcType=JdbcType.BIGINT),
-        @Result(column="type", property="type", jdbcType=JdbcType.INTEGER)
+            @Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT, id = true),
+            @Result(column = "open_id", property = "openId", jdbcType = JdbcType.VARCHAR),
+            @Result(column = "type", property = "type", jdbcType = JdbcType.INTEGER)
     })
     List<ThirdAuth> selectMany(SelectStatementProvider selectStatement);
 

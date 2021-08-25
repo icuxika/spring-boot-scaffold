@@ -6,7 +6,7 @@ public class GitHubUserInfo {
 
     private String login;
 
-    private Long id;
+    private String id;
 
     @JsonAlias("avatar_url")
     private String avatarUrl;
@@ -19,11 +19,11 @@ public class GitHubUserInfo {
         this.login = login;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

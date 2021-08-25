@@ -111,6 +111,11 @@ public class AuthServiceImpl implements AuthService {
         }
     }
 
+    @Override
+    public UserToken loginWithWeChat(WeChatUserInfo userInfo, HttpSession session) {
+        return thirdLogin(session, LoginType.WECHAT, userInfo.getOpenid(), "", "");
+    }
+
     /**
      * 目前第一次调用第三方登录都会创建一个全新的用户角色
      * 计划后期改为：
@@ -123,7 +128,8 @@ public class AuthServiceImpl implements AuthService {
      * @param name      第三方网站昵称
      * @param avatar    第三方网站头像
      */
-    public void thirdLogin(HttpSession session, LoginType loginType, long openId, String name, String avatar) {
+    public UserToken thirdLogin(HttpSession session, LoginType loginType, String openId, String name, String avatar) {
+        UserToken userToken = new UserToken();
         thirdAuthMapper.selectOne(s ->
                 s.where()
                         .where(ThirdAuthDynamicSqlSupport.openId, SqlBuilder.isEqualTo(openId))
@@ -141,11 +147,9 @@ public class AuthServiceImpl implements AuthService {
         ).flatMap(userAuth -> localAuthMapper.selectOne(s ->
                 s.where().where(LocalAuthDynamicSqlSupport.id, SqlBuilder.isEqualTo(userAuth.getAuthId()))
         )).ifPresent(localAuth -> {
-            UserToken userToken = new UserToken();
             userToken.setUserId(user.getId());
             userToken.setUsername(localAuth.getUsername());
             userToken.setExpireIn(LocalDateTime.now().plusMonths(1));
-            session.setAttribute(TokenAuthenticationFilter.SESSION_ATTRIBUTE_USER_TOKEN, userToken);
         })), () -> {
             ThirdAuth thirdAuth = new ThirdAuth();
             thirdAuth.setOpenId(openId);
@@ -176,11 +180,11 @@ public class AuthServiceImpl implements AuthService {
             userAuthForLocal.setType(AuthType.LOCAL.getIndex());
             userAuthMapper.insert(userAuthForLocal);
 
-            UserToken userToken = new UserToken();
             userToken.setUserId(user.getId());
             userToken.setUsername(username);
             userToken.setExpireIn(LocalDateTime.now().plusMonths(1));
-            session.setAttribute(TokenAuthenticationFilter.SESSION_ATTRIBUTE_USER_TOKEN, userToken);
         });
+        session.setAttribute(TokenAuthenticationFilter.SESSION_ATTRIBUTE_USER_TOKEN, userToken);
+        return userToken;
     }
 }

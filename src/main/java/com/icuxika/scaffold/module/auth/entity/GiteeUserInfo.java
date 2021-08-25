@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 
 public class GiteeUserInfo {
 
-    private Long id;
+    private String id;
 
     private String login;
 
@@ -13,11 +13,11 @@ public class GiteeUserInfo {
     @JsonAlias("avatar_url")
     private String avatarUrl;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
