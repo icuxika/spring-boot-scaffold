@@ -11,6 +11,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +31,9 @@ public class TestController implements ApplicationContextAware {
 
     @Autowired
     private MQMessageSendLogMapper mqMessageSendLogMapper;
+
+    @Autowired
+    private KafkaTemplate<String, String> kafkaTemplate;
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
@@ -85,4 +89,8 @@ public class TestController implements ApplicationContextAware {
         System.out.println(parameter);
     }
 
+    @GetMapping("sendKafkaMessage")
+    public void sendKafkaMessage() {
+        kafkaTemplate.send("", 0, "", "");
+    }
 }

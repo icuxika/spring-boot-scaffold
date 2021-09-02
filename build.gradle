@@ -32,8 +32,11 @@ dependencies {
 //    runtimeOnly 'com.h2database:h2'
     runtimeOnly 'mysql:mysql-connector-java'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    implementation group: 'commons-codec', name: 'commons-codec', version: '1.15'
-    implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.69'
+    implementation 'commons-codec:commons-codec:1.15'
+    implementation 'org.bouncycastle:bcprov-jdk15on:1.69'
+    implementation 'org.apache.commons:commons-pool2'
+    implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'org.apache.rocketmq:rocketmq-spring-boot-starter:2.2.0'
 }
 
 test {

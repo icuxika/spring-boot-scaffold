@@ -8,7 +8,6 @@ import com.icuxika.scaffold.parameter.PageQuery;
 import com.icuxika.scaffold.parameter.QueryPage;
 import org.mybatis.dynamic.sql.select.CountDSLCompleter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -33,9 +32,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
-    @Autowired
-    @Qualifier("redisConnectionFactory1")
-    private RedisConnectionFactory redisConnectionFactory1;
+//    @Autowired
+//    @Qualifier("redisConnectionFactory1")
+private RedisConnectionFactory redisConnectionFactory1;
 
     @RedisLock(key = "test")
     @Override

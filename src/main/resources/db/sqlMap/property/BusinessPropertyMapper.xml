@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icuxika.scaffold.module.property.mapper.BusinessPropertyMapper">
+    <resultMap id="BaseResultMap" type="com.icuxika.scaffold.module.property.entity.BusinessProperty">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="date" jdbcType="TIMESTAMP" property="date"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
+        <result column="detail_date" jdbcType="TIMESTAMP" property="detailDate"/>
+        <result column="is_available" jdbcType="BIT" property="isAvailable"/>
+        <result column="is_unsigned" jdbcType="TINYINT" property="isUnsigned"/>
+        <result column="type" jdbcType="TINYINT" property="type"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id
+        , date, create_time, update_time, price, is_deleted, detail_date, is_available,
+    is_unsigned, type
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_business_property
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from t_business_property
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.icuxika.scaffold.module.property.entity.BusinessProperty">
+        insert into t_business_property (id, date, create_time,
+                                         update_time, price, is_deleted,
+                                         detail_date, is_available, is_unsigned,
+                                         type)
+        values (#{id,jdbcType=BIGINT}, #{date,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP},
+                #{updateTime,jdbcType=TIMESTAMP}, #{price,jdbcType=DECIMAL}, #{isDeleted,jdbcType=TINYINT},
+                #{detailDate,jdbcType=TIMESTAMP}, #{isAvailable,jdbcType=BIT}, #{isUnsigned,jdbcType=TINYINT},
+                #{type,jdbcType=TINYINT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.icuxika.scaffold.module.property.entity.BusinessProperty"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into t_business_property
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="date != null">
+                date,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+            <if test="detailDate != null">
+                detail_date,
+            </if>
+            <if test="isAvailable != null">
+                is_available,
+            </if>
+            <if test="isUnsigned != null">
+                is_unsigned,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="date != null">
+                #{date,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=TINYINT},
+            </if>
+            <if test="detailDate != null">
+                #{detailDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isAvailable != null">
+                #{isAvailable,jdbcType=BIT},
+            </if>
+            <if test="isUnsigned != null">
+                #{isUnsigned,jdbcType=TINYINT},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.icuxika.scaffold.module.property.entity.BusinessProperty">
+        update t_business_property
+        <set>
+            <if test="date != null">
+                date = #{date,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=TINYINT},
+            </if>
+            <if test="detailDate != null">
+                detail_date = #{detailDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isAvailable != null">
+                is_available = #{isAvailable,jdbcType=BIT},
+            </if>
+            <if test="isUnsigned != null">
+                is_unsigned = #{isUnsigned,jdbcType=TINYINT},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.icuxika.scaffold.module.property.entity.BusinessProperty">
+        update t_business_property
+        set date         = #{date,jdbcType=TIMESTAMP},
+            create_time  = #{createTime,jdbcType=TIMESTAMP},
+            update_time  = #{updateTime,jdbcType=TIMESTAMP},
+            price        = #{price,jdbcType=DECIMAL},
+            is_deleted   = #{isDeleted,jdbcType=TINYINT},
+            detail_date  = #{detailDate,jdbcType=TIMESTAMP},
+            is_available = #{isAvailable,jdbcType=BIT},
+            is_unsigned  = #{isUnsigned,jdbcType=TINYINT},
+            type         = #{type,jdbcType=TINYINT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

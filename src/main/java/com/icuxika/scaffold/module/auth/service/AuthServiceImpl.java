@@ -13,6 +13,7 @@ import org.mybatis.dynamic.sql.SqlBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
@@ -38,16 +39,19 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void loginWithGitHub(GitHubUserInfo userInfo, HttpSession session) {
         thirdLogin(session, LoginType.GITHUB, userInfo.getId(), userInfo.getLogin(), userInfo.getAvatarUrl());
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void loginWithGitee(GiteeUserInfo userInfo, HttpSession session) {
         thirdLogin(session, LoginType.GITEE, userInfo.getId(), userInfo.getName(), userInfo.getAvatarUrl());
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public UserToken login(String username, String password) {
         Optional<LocalAuth> optionalLocalAuth = localAuthMapper.selectOne(s ->
@@ -80,6 +84,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @RedisLock(key = "auth-register")
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public UserToken register(String username, String password) {
         Optional<LocalAuth> optionalLocalAuth = localAuthMapper.selectOne(s ->
@@ -111,6 +116,7 @@ public class AuthServiceImpl implements AuthService {
         }
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public UserToken loginWithWeChat(WeChatUserInfo userInfo, HttpSession session) {
         return thirdLogin(session, LoginType.WECHAT, userInfo.getOpenid(), "", "");

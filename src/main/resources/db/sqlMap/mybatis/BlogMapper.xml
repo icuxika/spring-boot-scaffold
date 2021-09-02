@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icuxika.scaffold.module.mybatis.mapper.BlogMapper">
+    <resultMap id="BaseResultMap" type="com.icuxika.scaffold.module.mybatis.entity.Blog">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="author_id" jdbcType="INTEGER" property="authorId"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from blog
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.icuxika.scaffold.module.mybatis.entity.Blog">
+        insert into blog (id, author_id, title)
+        values (#{id,jdbcType=BIGINT}, #{authorId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR})
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="com.icuxika.scaffold.module.mybatis.entity.Blog">
+        update blog
+        set author_id = #{authorId,jdbcType=INTEGER},
+            title     = #{title,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select id, author_id, title
+        from blog
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select id, author_id, title
+        from blog
+    </select>
+
+    <resultMap id="joinedAuthor" type="com.icuxika.scaffold.module.mybatis.entity.Author">
+        <id property="id" column="author_id"/>
+        <result property="username" column="author_username"/>
+        <result property="password" column="author_password"/>
+        <result property="email" column="author_email"/>
+        <result property="favouriteSection" column="author_favourite_section"/>
+    </resultMap>
+
+    <resultMap id="joinedComment" type="com.icuxika.scaffold.module.mybatis.entity.Comment">
+        <id property="id" column="comment_id"/>
+    </resultMap>
+
+    <resultMap id="joinedTag" type="com.icuxika.scaffold.module.mybatis.entity.Tag">
+        <id property="id" column="tag_id"/>
+    </resultMap>
+
+    <resultMap id="joinedPost" type="com.icuxika.scaffold.module.mybatis.entity.Post">
+        <id property="id" column="post_id"/>
+        <result property="subject" column="post_subject"/>
+        <result property="draft" column="draft"/>
+        <discriminator javaType="int" column="draft">
+            <case value="0">
+                <association property="author" resultMap="joinedAuthor"/>
+            </case>
+            <case value="1">
+                <collection property="commentList" resultMap="joinedComment"/>
+                <collection property="tagList" resultMap="joinedTag"/>
+            </case>
+        </discriminator>
+    </resultMap>
+
+    <resultMap id="draftPost" type="com.icuxika.scaffold.module.mybatis.entity.DraftPost" extends="joinedPost"/>
+
+    <resultMap id="blogJoinedWithPostsAndAuthor" type="com.icuxika.scaffold.module.mybatis.entity.Blog">
+        <id property="id" column="blog_id"/>
+        <result property="title" column="blog_title"/>
+        <association property="author" resultMap="joinedAuthor"/>
+        <collection property="postList" resultMap="joinedPost"/>
+    </resultMap>
+    <select id="selectBlogJoinedWithPostsAndAuthor" resultMap="blogJoinedWithPostsAndAuthor">
+        select B.id                as blog_id,
+               B.title             as blog_title,
+               B.author_id         as blog_author_id,
+               A.id                as author_id,
+               A.username          as author_username,
+               A.password          as author_password,
+               A.email             as author_email,
+               A.favourite_section as author_favourite_section,
+               P.id                as post_id,
+               P.blog_id           as post_blog_id,
+               P.author_id         as post_author_id,
+               P.created_on        as post_created_on,
+               P.section           as post_section,
+               P.subject           as post_subject,
+               P.draft             as draft,
+               C.id                as comment_id,
+               C.post_id           as comment_post_id,
+               C.name              as comment_name,
+               C.comment           as comment_text,
+               T.id                as tag_id,
+               T.name              as tag_name
+        from Blog B
+                 left outer join Author A on B.author_id = A.id
+                 left outer join Post P on B.id = P.blog_id
+                 left outer join Comment C on P.id = C.post_id
+                 left outer join Post_Tag PT on PT.post_id = P.id
+                 left outer join Tag T on PT.tag_id = T.id
+        where B.id = #{id};
+    </select>
+
+    <select id="findActiveBlogLike" resultMap="BaseResultMap">
+        SELECT * FROM blog
+        <!--        <where>-->
+        <!--            <if test="id != null">-->
+        <!--                id = #{id}-->
+        <!--            </if>-->
+        <!--            <if test="authorId != null">-->
+        <!--                AND authorId = #{authorId}-->
+        <!--            </if>-->
+        <!--            <if test="title != null">-->
+        <!--                AND title = #{title}-->
+        <!--            </if>-->
+        <!--        </where>-->
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="id != null">
+                id = #{id}
+            </if>
+            <if test="authorId != null">
+                AND authorId = #{authorId}
+            </if>
+            <if test="title != null">
+                AND title = #{title}
+            </if>
+        </trim>
+    </select>
+
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+        insert into blog (author_id, title) values
+        <foreach collection="blogList" item="item" separator=",">
+            (#{item.authorId}, #{item.title})
+        </foreach>
+    </insert>
+</mapper>

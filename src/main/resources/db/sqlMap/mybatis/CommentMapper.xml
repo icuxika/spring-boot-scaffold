@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icuxika.scaffold.module.mybatis.mapper.CommentMapper">
+    <resultMap id="BaseResultMap" type="com.icuxika.scaffold.module.mybatis.entity.Comment">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="post_id" jdbcType="INTEGER" property="postId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="comment" jdbcType="VARCHAR" property="comment"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from comment
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.icuxika.scaffold.module.mybatis.entity.Comment">
+        insert into comment (id, post_id, name,
+                             comment)
+        values (#{id,jdbcType=BIGINT}, #{postId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+                #{comment,jdbcType=VARCHAR})
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="com.icuxika.scaffold.module.mybatis.entity.Comment">
+        update comment
+        set post_id = #{postId,jdbcType=INTEGER},
+            name    = #{name,jdbcType=VARCHAR},
+            comment = #{comment,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select id, post_id, name, comment
+        from comment
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select id, post_id, name, comment
+        from comment
+    </select>
+</mapper>

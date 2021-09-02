@@ -8,7 +8,7 @@
     <classPathEntry
             location="/Users/icuxika/.gradle/caches/modules-2/files-2.1/mysql/mysql-connector-java/8.0.25/f8b9123acd13058c941aff25f308c9ed8000bb73/mysql-connector-java-8.0.25.jar"/>
 
-    <context id="mysql" targetRuntime="MyBatis3Simple">
+    <context id="mysql" targetRuntime="MyBatis3">
         <!-- 下面各项必须按照顺序！！！！！！！！！！！！！！！！！！！！！！！！！！！ -->
         <!-- 注释 -->
         <commentGenerator>
@@ -24,7 +24,7 @@
             <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>
         <!-- 类型转换 -->
-        <javaTypeResolver>
+        <javaTypeResolver type="com.icuxika.scaffold.config.MyJavaTypeResolver">
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
 

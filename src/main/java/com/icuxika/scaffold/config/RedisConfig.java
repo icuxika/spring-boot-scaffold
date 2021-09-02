@@ -1,26 +1,22 @@
 package com.icuxika.scaffold.config;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 
-@Configuration
+//@Configuration
 public class RedisConfig {
 
-    @Value("${spring.redis.host}")
+    //    @Value("${spring.redis.host}")
     private String redisHost;
 
-    @Value("${spring.redis.port}")
+    //    @Value("${spring.redis.port}")
     private int redisPort;
 
-    @Value("${spring.redis.password}")
+    //    @Value("${spring.redis.password}")
     private String redisPassword;
 
-    @Bean("redisConnectionFactory")
-    @Primary
+    //    @Bean("redisConnectionFactory")
+//    @Primary
     public LettuceConnectionFactory redisConnectionFactory() {
         RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
         configuration.setHostName(redisHost);
@@ -30,7 +26,7 @@ public class RedisConfig {
         return new LettuceConnectionFactory(configuration);
     }
 
-    @Bean("redisConnectionFactory1")
+    //    @Bean("redisConnectionFactory1")
     public LettuceConnectionFactory redisConnectionFactory1() {
         RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
         configuration.setHostName(redisHost);
