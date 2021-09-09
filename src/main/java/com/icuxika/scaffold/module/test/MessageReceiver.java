@@ -15,7 +15,7 @@ import java.io.IOException;
 @RabbitListener(queues = RabbitConfig.QUEUE_NAME)
 public class MessageReceiver {
 
-    private final Logger logger = LoggerFactory.getLogger(MessageReceiver.class);
+    private static final Logger logger = LoggerFactory.getLogger(MessageReceiver.class);
 
     @RabbitHandler
     public void processHandler(String msg, Channel channel, Message message) throws IOException {
