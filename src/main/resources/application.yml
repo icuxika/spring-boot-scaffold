@@ -124,6 +124,17 @@ spring:
     # 校验流程文件，默认校验resources下的processes文件夹里的流程文件
     check-process-definitions: true
 
+  data:
+    mongodb:
+      authentication-database: admin
+      username: icuxika
+      password: ALLURE_love921
+      database: spring-boot-scaffold
+
+  elasticsearch:
+    rest:
+      uris: http://localhost:9200
+
 mybatis:
   configuration:
     cache-enabled: true # 启用二级缓存
@@ -131,3 +142,6 @@ mybatis:
     #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
   mapper-locations: classpath:db/sqlMap/**/*.xml
+
+logging:
+  config: classpath:logback.xml
