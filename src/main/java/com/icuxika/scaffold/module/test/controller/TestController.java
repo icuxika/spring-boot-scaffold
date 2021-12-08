@@ -14,6 +14,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -92,5 +93,42 @@ public class TestController implements ApplicationContextAware {
     @GetMapping("sendKafkaMessage")
     public void sendKafkaMessage() {
         kafkaTemplate.send("", 0, "", "");
+    }
+
+    @PostMapping("upload")
+    public void upload(Info info, MultipartFile file) {
+        System.out.println(info.toString());
+        System.out.println(file.getOriginalFilename());
+    }
+}
+
+class Info {
+
+    private Long id;
+
+    private String name;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Info{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

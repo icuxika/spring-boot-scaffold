@@ -8,7 +8,7 @@ plugins {
 
 group = 'com.icuxika'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '16'
+sourceCompatibility = '17'
 
 repositories {
     mavenCentral()
@@ -47,6 +47,9 @@ dependencies {
     implementation 'org.elasticsearch:elasticsearch:7.12.1'
     implementation 'org.elasticsearch.client:elasticsearch-rest-client:7.12.1'
     implementation 'org.elasticsearch.client:elasticsearch-rest-high-level-client:7.12.1'
+
+    implementation 'com.baomidou:mybatis-plus-boot-starter:3.4.3.3'
+    implementation 'org.mapstruct:mapstruct:1.4.2.Final'
 }
 
 test {

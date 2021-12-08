@@ -7,23 +7,21 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.validation.ConstraintViolationException;
 import java.text.MessageFormat;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class ExceptionHandlerAdvice {
 
     /**
      * 全局异常兜底处理
      */
     @ExceptionHandler(Exception.class)
-    @ResponseBody
     public ApiData<Void> handleException(Exception e) {
         ApiData<Void> apiData = new ApiData<>();
         apiData.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
@@ -35,7 +33,6 @@ public class ExceptionHandlerAdvice {
      * 业务异常消息
      */
     @ExceptionHandler(ServiceException.class)
-    @ResponseBody
     public ApiData<Void> handleException(ServiceException e) {
         ApiData<Void> apiData = new ApiData<>();
         apiData.setCode(e.getStatusCode());
@@ -47,7 +44,6 @@ public class ExceptionHandlerAdvice {
      * [@RequestParam]注解的参数不存在
      */
     @ExceptionHandler(MissingServletRequestParameterException.class)
-    @ResponseBody
     public ApiData<Void> handleException(MissingServletRequestParameterException e) {
         ApiData<Void> apiData = new ApiData<>();
         apiData.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
@@ -59,7 +55,6 @@ public class ExceptionHandlerAdvice {
      * [POST/GET]单参数验证未通过，必须在Controller类上加上@Validated注解，否则在参数上无效
      */
     @ExceptionHandler(ConstraintViolationException.class)
-    @ResponseBody
     public ApiData<Void> handleException(ConstraintViolationException e) {
         ApiData<Void> apiData = new ApiData<>();
         apiData.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
@@ -71,7 +66,6 @@ public class ExceptionHandlerAdvice {
      * [GET]对象参数验证未通过
      */
     @ExceptionHandler(BindException.class)
-    @ResponseBody
     public ApiData<Void> handleException(BindException e) {
         ApiData<Void> apiData = new ApiData<>();
         apiData.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
@@ -83,7 +77,6 @@ public class ExceptionHandlerAdvice {
      * [POST] 对象参数验证未通过
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseBody
     public ApiData<Void> handleException(MethodArgumentNotValidException e) {
         ApiData<Void> apiData = new ApiData<>();
         apiData.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());

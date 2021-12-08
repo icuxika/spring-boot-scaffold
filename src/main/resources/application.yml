@@ -130,6 +130,7 @@ spring:
       username: icuxika
       password: ALLURE_love921
       database: spring-boot-scaffold
+      auto-index-creation: true # 自动创建注解对应的索引
 
   elasticsearch:
     rest:
